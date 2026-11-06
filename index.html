@@ -13,7 +13,7 @@
                     colors: {
                         luxuryDark: '#0b0f19',
                         luxuryCard: '#131c2e',
-                        luxuryBlue: '#1e293b',
+                        luxuryBorder: '#1e293b',
                         luxuryAccent: '#3b82f6',
                         luxuryGold: '#fbbf24'
                     }
@@ -21,171 +21,245 @@
             }
         }
     </script>
-    <style>body { background-color: #0b0f19; color: #f8fafc; font-family: sans-serif; }</style>
+    <style>
+        body { background-color: #0b0f19; color: #f8fafc; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between">
+<body class="min-h-screen flex flex-col justify-between selection:bg-blue-500 selection:text-white">
 
     <!-- HEADER / NAVBAR -->
-    <header class="bg-luxuryCard border-b border-blue-900/40 sticky top-0 z-50">
+    <header class="bg-luxuryCard border-b border-luxuryBorder sticky top-0 z-50 backdrop-blur-md bg-opacity/90">
         <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
-            <span class="text-2xl font-extrabold tracking-wider text-blue-400">LINKA21</span>
             <div class="flex items-center space-x-3">
-                <!-- Tombol Pengaturan URL Tunnel Cloudflare -->
-                <button onclick="bukaSettingUrl()" class="text-xs bg-slate-800 hover:bg-slate-700 text-gray-300 px-3 py-1.5 rounded-lg border border-slate-700 transition font-semibold" title="Atur URL Cloudflare Tunnel Termux">⚙️ Server</button>
+                <span class="text-2xl font-black tracking-wider bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent">LINKA21</span>
+                <span class="text-[10px] bg-blue-500/10 text-blue-400 px-2 py-0.5 rounded-full border border-blue-500/30 font-bold uppercase tracking-wider">NuxGame Engine</span>
+            </div>
+            
+            <div class="flex items-center space-x-3">
+                <!-- Tombol Pengaturan Server / Tunnel yang Lebih Rapi -->
+                <button onclick="openModal('serverModal')" class="flex items-center gap-1.5 text-xs bg-slate-800/80 hover:bg-slate-700 text-gray-300 px-3 py-2 rounded-xl border border-luxuryBorder transition font-semibold shadow-sm">
+                    <span>⚙️</span> <span class="hidden sm:inline">Konfigurasi Server</span>
+                </button>
                 
                 <div id="userNavSection" class="flex items-center space-x-2">
-                    <button onclick="openModal('loginModal')" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1.5 rounded-lg text-sm font-semibold transition">Login</button>
-                    <button onclick="openModal('registerModal')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-1.5 rounded-lg text-sm font-semibold transition">Daftar</button>
+                    <button onclick="openModal('loginModal')" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-xl text-xs font-bold transition shadow-lg shadow-blue-600/20">Login</button>
+                    <button onclick="openModal('registerModal')" class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-xl text-xs font-bold transition shadow-lg shadow-emerald-600/20">Daftar</button>
                 </div>
             </div>
         </div>
     </header>
 
     <!-- MAIN CONTENT -->
-    <main class="max-w-7xl mx-auto px-4 py-6 flex-grow w-full">
-        <!-- BANNER -->
-        <div class="bg-gradient-to-r from-blue-900/60 to-indigo-900/40 border border-blue-500/30 rounded-2xl p-6 mb-8 text-center shadow-xl">
-            <h1 class="text-3xl font-bold mb-2">Selamat Datang di LINKA21</h1>
-            <p class="text-gray-300 text-sm max-w-xl mx-auto">Bandar Togel Online Resmi dengan 12 Pasaran & Sistem Pembelian 1 Papan (10 Baris).</p>
-            <div class="mt-4 flex justify-center gap-4">
-                <button onclick="switchTab('pasaranTab')" class="bg-blue-600 text-white px-5 py-2 rounded-xl text-sm font-bold shadow">Pasaran Togel</button>
-                <button onclick="switchTab('depoTab')" class="bg-gray-800 hover:bg-gray-700 text-gray-200 border border-gray-700 px-5 py-2 rounded-xl text-sm font-bold">Deposit & Withdraw</button>
+    <main class="max-w-7xl mx-auto px-4 py-6 flex-grow w-full space-y-6">
+        
+        <!-- BANNER UTAMA -->
+        <div class="bg-gradient-to-br from-luxuryCard via-blue-950/40 to-luxuryCard border border-luxuryBorder rounded-3xl p-6 sm:p-8 text-center shadow-2xl relative overflow-hidden">
+            <div class="absolute -right-10 -top-10 w-40 h-40 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            <h1 class="text-2xl sm:text-4xl font-extrabold mb-3 tracking-tight">Selamat Datang di <span class="text-blue-400">LINKA21</span></h1>
+            <p class="text-gray-400 text-xs sm:text-sm max-w-xl mx-auto leading-relaxed mb-6">Bandar Togel Online Resmi dengan 12 Pasaran Pilihan & Sistem Pembelian 1 Papan (10 Baris Sekaligus) yang Cepat dan Transparan.</p>
+            <div class="flex flex-wrap justify-center gap-3">
+                <button onclick="switchTab('pasaranTab')" class="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2.5 rounded-xl text-xs font-bold shadow-lg shadow-blue-600/30 transition">Pasaran Togel</button>
+                <button onclick="switchTab('depoTab')" class="bg-slate-800 hover:bg-slate-700 text-gray-200 border border-luxuryBorder px-6 py-2.5 rounded-xl text-xs font-bold transition">Deposit & Withdraw</button>
             </div>
         </div>
 
-        <!-- TAB 1: 12 PASARAN & TARUHAN 10 BARIS -->
-        <div id="pasaranTab" class="tab-content">
-            <h2 class="text-xl font-bold mb-4">🎲 12 Pasaran Togel Resmi</h2>
-            <div id="pasaranGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-                <!-- Data loaded via API Cloudflare -->
+        <!-- TAB 1: 12 PASARAN & TARUHAN -->
+        <div id="pasaranTab" class="tab-content space-y-4">
+            <div class="flex items-center justify-between">
+                <h2 class="text-lg font-bold flex items-center gap-2 text-blue-400">🎲 Daftar 12 Pasaran Resmi</h2>
+                <span class="text-xs text-gray-400 bg-luxuryCard px-3 py-1 rounded-full border border-luxuryBorder">Real-time DB Termux</span>
             </div>
-
-            <!-- FORM TARUHAN -->
-            <div id="formTaruhanSection" class="bg-luxuryCard border border-blue-900/40 rounded-2xl p-6 hidden shadow-2xl">
-                <div class="flex justify-between items-center mb-4 border-b border-blue-900/40 pb-3">
-                    <h3 class="text-lg font-bold text-blue-400" id="selectedPasaranTitle">Pasang Angka Papan</h3>
-                    <button onclick="closeTaruhan()" class="text-gray-400 hover:text-white text-sm font-bold">Tutup [X]</button>
-                </div>
-                <p class="text-xs text-gray-400 mb-4">Isi maksimal <strong>10 baris tebakan angka</strong> dalam sekali transaksi pembelian 1 papan.</p>
-                <div id="papanBarisContainer" class="space-y-3 mb-4"></div>
-                <div class="flex justify-between items-center bg-luxuryDark p-4 rounded-xl border border-blue-900/30">
-                    <div>
-                        <p class="text-xs text-gray-400">Total Biaya</p>
-                        <p class="text-lg font-bold text-yellow-400" id="totalBiayaRp">Rp 0</p>
-                    </div>
-                    <button onclick="submitTaruhan()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-2.5 rounded-xl text-sm shadow transition">Beli 1 Papan</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- TAB 2: DEPOSIT QRIS & WITHDRAW -->
-        <div id="depoTab" class="tab-content hidden max-w-xl mx-auto bg-luxuryCard border border-blue-900/40 rounded-2xl p-6 shadow-xl">
-            <h2 class="text-xl font-bold mb-4 text-center">Form Transaksi (Deposit QRIS / Withdraw)</h2>
             
-            <!-- Gambar QRIS Bandar -->
-            <div id="qrisContainer" class="text-center mb-6">
-                <p class="text-xs text-gray-400 mb-3">Scan QRIS di bawah ini untuk Deposit:</p>
-                <div class="bg-white p-3 inline-block rounded-xl shadow">
-                    <img id="qrisImageDisplay" src="https://via.placeholder.com/250x250.png?text=Memuat+QRIS..." alt="QRIS Bandar" class="w-48 h-48 object-contain mx-auto">
-                </div>
+            <div id="pasaranGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Data loaded via API -->
             </div>
 
-            <div class="space-y-4 border-t border-blue-900/40 pt-4">
+            <!-- FORM TARUHAN 1 PAPAN -->
+            <div id="formTaruhanSection" class="bg-luxuryCard border border-luxuryBorder rounded-3xl p-6 hidden shadow-2xl space-y-4 mt-6">
+                <div class="flex justify-between items-center border-b border-luxuryBorder pb-3">
+                    <div>
+                        <h3 class="text-base font-bold text-blue-400" id="selectedPasaranTitle">Pasang Angka Papan</h3>
+                        <p class="text-[11px] text-gray-400">Isi maksimal 10 baris tebakan angka dalam sekali transaksi.</p>
+                    </div>
+                    <button onclick="closeTaruhan()" class="bg-slate-800 hover:bg-slate-700 text-gray-300 px-3 py-1.5 rounded-xl text-xs font-bold transition">Tutup [X]</button>
+                </div>
+                
+                <div id="papanBarisContainer" class="space-y-2.5 max-h-[350px] overflow-y-auto pr-1"></div>
+
+                <div class="flex flex-col sm:flex-row justify-between items-center bg-luxuryDark p-4 rounded-2xl border border-luxuryBorder gap-4">
+                    <div>
+                        <p class="text-[11px] text-gray-400 font-medium">Total Biaya 1 Papan</p>
+                        <p class="text-xl font-black text-yellow-400" id="totalBiayaRp">Rp 0</p>
+                    </div>
+                    <button onclick="submitTaruhan()" class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-8 py-3 rounded-xl text-xs shadow-lg shadow-emerald-600/30 transition">Beli 1 Papan Sekaligus</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: DEPOSIT & WITHDRAW -->
+        <div id="depoTab" class="tab-content hidden max-w-xl mx-auto bg-luxuryCard border border-luxuryBorder rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
+            <div class="text-center">
+                <h2 class="text-xl font-bold text-blue-400 mb-1">Form Transaksi Keuangan</h2>
+                <p class="text-xs text-gray-400">Pilih jenis transaksi Deposit QRIS atau Withdraw (Penarikan Dana).</p>
+            </div>
+
+            <!-- QRIS Card Container -->
+            <div id="qrisContainer" class="bg-luxuryDark border border-luxuryBorder rounded-2xl p-5 text-center space-y-3">
+                <p class="text-xs font-semibold text-gray-300">Scan QRIS Resmi Bandar di Bawah Ini:</p>
+                <div class="bg-white p-3 inline-block rounded-2xl shadow-inner">
+                    <img id="qrisImageDisplay" src="https://via.placeholder.com/220x220.png?text=Memuat+QRIS..." alt="QRIS Bandar" class="w-44 h-44 object-contain mx-auto rounded-lg">
+                </div>
+                <p class="text-[11px] text-yellow-400/90 italic">Pastikan nominal transfer sesuai dengan yang Anda input di form bawah.</p>
+            </div>
+
+            <div class="space-y-4 pt-2">
                 <div>
-                    <label class="block text-xs text-gray-400 mb-1">Tipe Transaksi</label>
-                    <select id="trxType" onchange="toggleTrxForm()" class="w-full bg-luxuryDark border border-blue-900/50 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
+                    <label class="block text-xs font-semibold text-gray-300 mb-1.5">Tipe Transaksi</label>
+                    <select id="trxType" onchange="toggleTrxForm()" class="w-full bg-luxuryDark border border-luxuryBorder rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-blue-500">
                         <option value="depo">Deposit Saldo</option>
                         <option value="wd">Withdraw (Penarikan)</option>
                     </select>
                 </div>
                 <div>
-                    <label class="block text-xs text-gray-400 mb-1">Nominal (Rp)</label>
-                    <input type="number" id="trxAmount" placeholder="Contoh: 50000" class="w-full bg-luxuryDark border border-blue-900/50 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
+                    <label class="block text-xs font-semibold text-gray-300 mb-1.5">Nominal (Rp)</label>
+                    <input type="number" id="trxAmount" placeholder="Contoh: 50000" class="w-full bg-luxuryDark border border-luxuryBorder rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-blue-500">
                 </div>
                 
                 <!-- Info Rekening Tampil Otomatis saat WD -->
-                <div id="infoRekeningWd" class="bg-luxuryDark p-4 rounded-xl border border-blue-900/30 text-xs text-gray-300 hidden">
-                    <p class="text-blue-400 font-bold mb-2">📋 Rekening Tujuan Withdraw Anda:</p>
-                    <p>Bank / E-Wallet: <span id="wdBank" class="text-white font-semibold"></span></p>
-                    <p>No Rekening: <span id="wdNoRek" class="text-yellow-400 font-semibold"></span></p>
-                    <p>Atas Nama: <span id="wdNama" class="text-white font-semibold"></span></p>
+                <div id="infoRekeningWd" class="bg-luxuryDark p-4 rounded-2xl border border-luxuryBorder text-xs text-gray-300 hidden space-y-1.5">
+                    <p class="text-blue-400 font-bold mb-1 flex items-center gap-1.5"><span>📋</span> Rekening Tujuan Withdraw Anda:</p>
+                    <p>Bank / E-Wallet: <span id="wdBank" class="text-white font-bold"></span></p>
+                    <p>No Rekening: <span id="wdNoRek" class="text-yellow-400 font-bold"></span></p>
+                    <p>Atas Nama: <span id="wdNama" class="text-white font-bold"></span></p>
                 </div>
 
                 <!-- Keterangan Pengirim khusus Deposit -->
                 <div id="infoKetDepo">
-                    <label class="block text-xs text-gray-400 mb-1">Keterangan / Nama Pengirim / Ref Transfer QRIS</label>
-                    <input type="text" id="trxKeterangan" placeholder="Contoh: Transfer BCA a.n Budi / No Ref 12345" class="w-full bg-luxuryDark border border-blue-900/50 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
+                    <label class="block text-xs font-semibold text-gray-300 mb-1.5">Keterangan / Nama Pengirim / Ref Transfer QRIS</label>
+                    <input type="text" id="trxKeterangan" placeholder="Contoh: Transfer BCA a.n Budi / No Ref 12345" class="w-full bg-luxuryDark border border-luxuryBorder rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-blue-500">
                 </div>
 
-                <button onclick="submitTransaksi()" class="w-full bg-blue-600 hover:bg-blue-700 font-bold py-3 rounded-xl text-sm shadow transition">Kirim Permintaan Transaksi</button>
+                <button onclick="submitTransaksi()" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3.5 rounded-xl text-xs shadow-lg shadow-blue-600/30 transition">Kirim Permintaan Transaksi</button>
             </div>
         </div>
+
     </main>
 
-    <!-- MODAL LOGIN -->
-    <div id="loginModal" class="fixed inset-0 bg-black/70 flex items-center justify-center z-50 hidden">
-        <div class="bg-luxuryCard border border-blue-900/50 rounded-2xl p-6 w-full max-w-sm shadow-2xl space-y-3">
-            <h3 class="text-lg font-bold">Login Member</h3>
-            <input type="text" id="loginUsername" placeholder="Username" class="w-full bg-luxuryDark border border-blue-900/50 rounded-xl px-3 py-2.5 text-sm text-white">
-            <input type="password" id="loginPassword" placeholder="Password" class="w-full bg-luxuryDark border border-blue-900/50 rounded-xl px-3 py-2.5 text-sm text-white">
-            <div class="flex gap-2 pt-2">
-                <button onclick="closeModal('loginModal')" class="w-1/2 bg-gray-800 py-2 rounded-xl text-xs font-bold">Batal</button>
-                <button onclick="processLogin()" class="w-1/2 bg-blue-600 hover:bg-blue-700 py-2 rounded-xl text-xs font-bold">Login</button>
+    <!-- MODAL PENGATURAN SERVER (TUNNEL CLOUDFLARE) -->
+    <div id="serverModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 hidden p-4">
+        <div class="bg-luxuryCard border border-luxuryBorder rounded-3xl p-6 sm:p-7 w-full max-w-md shadow-2xl space-y-4">
+            <div class="flex justify-between items-center border-b border-luxuryBorder pb-3">
+                <h3 class="text-base font-bold text-blue-400">⚙️ Konfigurasi URL Server Termux</h3>
+                <button onclick="closeModal('serverModal')" class="text-gray-400 hover:text-white text-xs font-bold">✕</button>
+            </div>
+            <p class="text-xs text-gray-400 leading-relaxed">Masukkan URL Cloudflare Tunnel aktif dari Termux Anda agar frontend GitHub terhubung secara real-time dengan database lokal.</p>
+            <div class="space-y-3">
+                <div>
+                    <label class="block text-xs text-gray-300 mb-1 font-medium">URL Tunnel Aktif</label>
+                    <input type="text" id="inputServerUrl" placeholder="https://xxxx.trycloudflare.com" class="w-full bg-luxuryDark border border-luxuryBorder rounded-xl px-3.5 py-3 text-xs text-white focus:outline-none focus:border-blue-500 font-mono">
+                </div>
+                <div class="flex gap-2.5 pt-2">
+                    <button onclick="closeModal('serverModal')" class="w-1/2 bg-slate-800 hover:bg-slate-700 py-3 rounded-xl text-xs font-bold transition">Batal</button>
+                    <button onclick="saveServerUrl()" class="w-1/2 bg-blue-600 hover:bg-blue-500 py-3 rounded-xl text-xs font-bold shadow-lg shadow-blue-600/30 transition">Simpan & Hubungkan</button>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- MODAL REGISTER DENGAN DATA BANK -->
-    <div id="registerModal" class="fixed inset-0 bg-black/70 flex items-center justify-center z-50 hidden">
-        <div class="bg-luxuryCard border border-blue-900/50 rounded-2xl p-6 w-full max-w-md shadow-2xl space-y-3">
-            <h3 class="text-lg font-bold text-emerald-400">Daftar Akun & Rekening Bank</h3>
-            <input type="text" id="regUsername" placeholder="Username" class="w-full bg-luxuryDark border border-blue-900/50 rounded-xl px-3 py-2 text-sm text-white">
-            <input type="password" id="regPassword" placeholder="Password" class="w-full bg-luxuryDark border border-blue-900/50 rounded-xl px-3 py-2 text-sm text-white">
-            <select id="regBank" class="w-full bg-luxuryDark border border-blue-900/50 rounded-xl px-3 py-2 text-sm text-white">
-                <option value="">Pilih Bank / E-Wallet</option>
-                <option value="BCA">BCA</option>
-                <option value="BRI">BRI</option>
-                <option value="MANDIRI">MANDIRI</option>
-                <option value="BNI">BNI</option>
-                <option value="DANA">DANA</option>
-                <option value="OVO">OVO</option>
-                <option value="GOPAY">GOPAY</option>
-            </select>
-            <input type="text" id="regNoRek" placeholder="Nomor Rekening / No HP Akun" class="w-full bg-luxuryDark border border-blue-900/50 rounded-xl px-3 py-2 text-sm text-white">
-            <input type="text" id="regNamaPemilik" placeholder="Nama Pemilik Rekening Sesuai Buku/Akun" class="w-full bg-luxuryDark border border-blue-900/50 rounded-xl px-3 py-2 text-sm text-white">
-            <div class="flex gap-2 pt-2">
-                <button onclick="closeModal('registerModal')" class="w-1/2 bg-gray-800 py-2 rounded-xl text-xs font-bold">Batal</button>
-                <button onclick="processRegister()" class="w-1/2 bg-emerald-600 hover:bg-emerald-700 py-2 rounded-xl text-xs font-bold">Daftar</button>
+    <!-- MODAL LOGIN -->
+    <div id="loginModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 hidden p-4">
+        <div class="bg-luxuryCard border border-luxuryBorder rounded-3xl p-6 sm:p-7 w-full max-w-sm shadow-2xl space-y-4">
+            <div class="flex justify-between items-center border-b border-luxuryBorder pb-3">
+                <h3 class="text-base font-bold text-blue-400">🔐 Login Member</h3>
+                <button onclick="closeModal('loginModal')" class="text-gray-400 hover:text-white text-xs font-bold">✕</button>
+            </div>
+            <div class="space-y-3">
+                <div>
+                    <label class="block text-xs text-gray-300 mb-1 font-medium">Username</label>
+                    <input type="text" id="loginUsername" placeholder="Masukkan username" class="w-full bg-luxuryDark border border-luxuryBorder rounded-xl px-3.5 py-3 text-xs text-white focus:outline-none focus:border-blue-500">
+                </div>
+                <div>
+                    <label class="block text-xs text-gray-300 mb-1 font-medium">Password</label>
+                    <input type="password" id="loginPassword" placeholder="Masukkan password" class="w-full bg-luxuryDark border border-luxuryBorder rounded-xl px-3.5 py-3 text-xs text-white focus:outline-none focus:border-blue-500">
+                </div>
+                <div class="flex gap-2.5 pt-3">
+                    <button onclick="closeModal('loginModal')" class="w-1/2 bg-slate-800 hover:bg-slate-700 py-3 rounded-xl text-xs font-bold transition">Batal</button>
+                    <button onclick="processLogin()" class="w-1/2 bg-blue-600 hover:bg-blue-500 py-3 rounded-xl text-xs font-bold shadow-lg shadow-blue-600/30 transition">Masuk</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL REGISTER -->
+    <div id="registerModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 hidden p-4">
+        <div class="bg-luxuryCard border border-luxuryBorder rounded-3xl p-6 sm:p-7 w-full max-w-md shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center border-b border-luxuryBorder pb-3">
+                <h3 class="text-base font-bold text-emerald-400">📝 Pendaftaran Akun & Rekening</h3>
+                <button onclick="closeModal('registerModal')" class="text-gray-400 hover:text-white text-xs font-bold">✕</button>
+            </div>
+            <div class="space-y-3">
+                <div>
+                    <label class="block text-xs text-gray-300 mb-1 font-medium">Buat Username</label>
+                    <input type="text" id="regUsername" placeholder="Username unik" class="w-full bg-luxuryDark border border-luxuryBorder rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-emerald-500">
+                </div>
+                <div>
+                    <label class="block text-xs text-gray-300 mb-1 font-medium">Buat Password</label>
+                    <input type="password" id="regPassword" placeholder="Password akun" class="w-full bg-luxuryDark border border-luxuryBorder rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-emerald-500">
+                </div>
+                <div>
+                    <label class="block text-xs text-gray-300 mb-1 font-medium">Pilih Bank / E-Wallet</label>
+                    <select id="regBank" class="w-full bg-luxuryDark border border-luxuryBorder rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-emerald-500">
+                        <option value="">-- Pilih Bank / E-Wallet --</option>
+                        <option value="BCA">BCA</option>
+                        <option value="BRI">BRI</option>
+                        <option value="MANDIRI">MANDIRI</option>
+                        <option value="BNI">BNI</option>
+                        <option value="DANA">DANA</option>
+                        <option value="OVO">OVO</option>
+                        <option value="GOPAY">GOPAY</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs text-gray-300 mb-1 font-medium">Nomor Rekening / No HP</label>
+                    <input type="text" id="regNoRek" placeholder="Nomor rekening tujuan WD" class="w-full bg-luxuryDark border border-luxuryBorder rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-emerald-500">
+                </div>
+                <div>
+                    <label class="block text-xs text-gray-300 mb-1 font-medium">Nama Pemilik Rekening</label>
+                    <input type="text" id="regNamaPemilik" placeholder="Sesuai buku tabungan / akun" class="w-full bg-luxuryDark border border-luxuryBorder rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-emerald-500">
+                </div>
+                <div class="flex gap-2.5 pt-3">
+                    <button onclick="closeModal('registerModal')" class="w-1/2 bg-slate-800 hover:bg-slate-700 py-3 rounded-xl text-xs font-bold transition">Batal</button>
+                    <button onclick="processRegister()" class="w-1/2 bg-emerald-600 hover:bg-emerald-500 py-3 rounded-xl text-xs font-bold shadow-lg shadow-emerald-600/30 transition">Daftar Sekarang</button>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- FOOTER -->
-    <footer class="bg-luxuryCard border-t border-blue-900/40 py-4 mt-8 text-center text-xs text-gray-500">
+    <footer class="bg-luxuryCard border-t border-luxuryBorder py-5 mt-10 text-center text-xs text-gray-500">
         &copy; 2026 LINKA21. All rights reserved. Powered by NuxGame Engine & Termux DB.
     </footer>
 
-    <!-- JAVASCRIPT KONEKSI CLOUDFLARE TUNNEL -->
+    <!-- JAVASCRIPT KONEKSI OTOMATIS & INTERAKTIF -->
     <script>
-        // Mengambil URL Cloudflare Tunnel dari memori browser (LocalStorage) atau default localhost
         let API_BASE_URL = localStorage.getItem('linka21_api_url') || "http://localhost:5000";
-
         let currentUser = null;
         let activePasaranKode = null;
 
         document.addEventListener("DOMContentLoaded", () => {
+            document.getElementById('inputServerUrl').value = API_BASE_URL;
             loadPasaran();
             loadQris();
             buildPapanBaris();
         });
 
-        // Fungsi untuk mengatur URL Cloudflare Tunnel secara instan
-        function bukaSettingUrl() {
-            let urlBaru = prompt("Masukkan URL Cloudflare Tunnel Termux Anda (Contoh: https://xxxx.trycloudflare.com):", API_BASE_URL);
+        function saveServerUrl() {
+            let urlBaru = document.getElementById('inputServerUrl').value;
             if(urlBaru) {
-                API_BASE_URL = urlBaru.trim().replace(/\/$/, ""); // Hapus garis miring di akhir jika ada
+                API_BASE_URL = urlBaru.trim().replace(/\/$/, "");
                 localStorage.setItem('linka21_api_url', API_BASE_URL);
-                alert("URL Server Cloudflare berhasil disimpan! Halaman akan dimuat ulang.");
+                alert("URL Server berhasil diperbarui!");
+                closeModal('serverModal');
                 location.reload();
             }
         }
@@ -228,18 +302,18 @@
                         let isClosed = statusPasar === 'CLOSE';
 
                         grid.innerHTML += `
-                            <div class="bg-luxuryCard border border-blue-900/40 rounded-2xl p-4 flex flex-col justify-between shadow">
+                            <div class="bg-luxuryCard border border-luxuryBorder rounded-2xl p-4 flex flex-col justify-between shadow-lg hover:border-blue-500/50 transition">
                                 <div>
-                                    <div class="flex justify-between items-center mb-2">
-                                        <span class="font-bold text-sm text-blue-400">${p.nama}</span>
-                                        <span class="text-xs px-2 py-0.5 rounded font-bold ${isClosed ? 'bg-red-950 text-red-400' : 'bg-emerald-950 text-emerald-400'}">${statusPasar}</span>
+                                    <div class="flex justify-between items-center mb-2.5">
+                                        <span class="font-bold text-xs text-blue-400 uppercase tracking-wide">${p.nama}</span>
+                                        <span class="text-[10px] px-2.5 py-0.5 rounded-full font-bold ${isClosed ? 'bg-red-950 text-red-400 border border-red-500/30' : 'bg-emerald-950 text-emerald-400 border border-emerald-500/30'}">${statusPasar}</span>
                                     </div>
-                                    <p class="text-xs text-gray-400">Result Terakhir:</p>
-                                    <p class="text-xl font-extrabold text-yellow-400 tracking-widest my-1">${p.result_terakhir || '0000'}</p>
+                                    <p class="text-[11px] text-gray-400">Result Terakhir:</p>
+                                    <p class="text-lg font-black text-yellow-400 tracking-widest my-1">${p.result_terakhir || '0000'}</p>
                                 </div>
                                 ${isClosed ? 
-                                    '<button disabled class="mt-3 bg-gray-800 text-gray-500 py-1.5 rounded-xl text-xs font-bold cursor-not-allowed">Pasaran Tutup</button>' : 
-                                    `<button onclick="openTaruhan('${p.kode}', '${p.nama}')" class="mt-3 bg-blue-600/20 hover:bg-blue-600 text-blue-400 hover:text-white border border-blue-500/40 py-1.5 rounded-xl text-xs font-bold transition">Pasang Angka</button>`
+                                    '<button disabled class="mt-3 bg-luxuryDark text-gray-600 py-2 rounded-xl text-xs font-bold cursor-not-allowed border border-luxuryBorder">Pasaran Tutup</button>' : 
+                                    `<button onclick="openTaruhan('${p.kode}', '${p.nama}')" class="mt-3 bg-blue-600/10 hover:bg-blue-600 text-blue-400 hover:text-white border border-blue-500/40 py-2 rounded-xl text-xs font-bold transition shadow-sm">Pasang Angka</button>`
                                 }
                             </div>
                         `;
@@ -277,9 +351,9 @@
                     alert(`Login Berhasil! Selamat datang, ${currentUser.username}`);
                     closeModal('loginModal');
                     document.getElementById('userNavSection').innerHTML = `
-                        <div class="text-xs text-right">
-                            <p class="font-bold text-yellow-400">Rp ${Number(currentUser.saldo).toLocaleString()}</p>
-                            <p class="text-gray-400">${currentUser.username} (${currentUser.nama_bank || 'Bank'})</p>
+                        <div class="text-right">
+                            <p class="font-black text-yellow-400 text-xs">Rp ${Number(currentUser.saldo).toLocaleString()}</p>
+                            <p class="text-[10px] text-gray-400">${currentUser.username}</p>
                         </div>
                     `;
                 } else {
@@ -326,10 +400,10 @@
             container.innerHTML = '';
             for(let i = 1; i <= 10; i++) {
                 container.innerHTML += `
-                    <div class="flex gap-2 items-center">
-                        <span class="text-xs text-gray-500 w-6">#${i}</span>
-                        <input type="text" maxlength="4" placeholder="Angka (4D/3D/2D)" class="baris-angka w-2/3 bg-luxuryDark border border-blue-900/50 rounded-lg px-3 py-1.5 text-xs text-white" oninput="hitungTotalBiaya()">
-                        <input type="number" placeholder="Nominal" class="baris-nominal w-1/3 bg-luxuryDark border border-blue-900/50 rounded-lg px-3 py-1.5 text-xs text-white" oninput="hitungTotalBiaya()">
+                    <div class="flex gap-2 items-center bg-luxuryDark p-2.5 rounded-xl border border-luxuryBorder">
+                        <span class="text-[11px] font-bold text-gray-500 w-6 text-center">#${i}</span>
+                        <input type="text" maxlength="4" placeholder="Angka (4D/3D/2D)" class="baris-angka w-7/12 bg-luxuryCard border border-luxuryBorder rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-blue-500" oninput="hitungTotalBiaya()">
+                        <input type="number" placeholder="Nominal Rp" class="baris-nominal w-5/12 bg-luxuryCard border border-luxuryBorder rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-blue-500" oninput="hitungTotalBiaya()">
                     </div>
                 `;
             }
@@ -339,6 +413,7 @@
             activePasaranKode = kode;
             document.getElementById('selectedPasaranTitle').innerText = `Pasang Papan - ${nama}`;
             document.getElementById('formTaruhanSection').classList.remove('hidden');
+            window.scrollTo({ top: document.getElementById('formTaruhanSection').offsetTop - 80, behavior: 'smooth' });
         }
 
         function closeTaruhan() {
